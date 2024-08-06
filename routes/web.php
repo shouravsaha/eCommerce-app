@@ -8,8 +8,10 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function(){
-    Route::get('dashboard', [AdminController::class, 'dashboard']);
     Route::get('login', [AdminController::class, 'login']);
+    Route::group(['middleware' => ['admin']], function(){
+        Route::get('dashboard', [AdminController::class, 'dashboard']);
+    });
 });
 
 
