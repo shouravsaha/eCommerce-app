@@ -2,15 +2,16 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::prefix('admin')->group(function(){
-    Route::get('login', [AdminController::class, 'login']);
+    Route::match(['get', 'post'],'login', [AdminController::class, 'login']);
     Route::group(['middleware' => ['admin']], function(){
-        Route::get('dashboard', [AdminController::class, 'dashboard']);
+        Route::match(['get', 'post'],'dashboard', [AdminController::class, 'dashboard']);
     });
 });
 
